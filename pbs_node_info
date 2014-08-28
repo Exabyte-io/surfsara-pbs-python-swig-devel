@@ -10,6 +10,11 @@ def main():
   c      = pbs.pbs_connect(server)
 
   nodes = pbs.pbs_statnode(c, '', 'NULL', 'NULL')
+  e, txt=  pbs.error()
+  if e:
+    print txt
+
+  sys.exit(1)
 
   for node in nodes:
     print node.name

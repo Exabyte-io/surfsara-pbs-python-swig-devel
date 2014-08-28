@@ -90,6 +90,7 @@
 #define ATTR_u "User_List"
 #define ATTR_v "Variable_List"
 #define ATTR_A "Account_Name"
+#define ATTR_args "job_arguments"
 #define ATTR_M "Mail_Users"
 #define ATTR_N "Job_Name"
 #define ATTR_S "Shell_Path_List"
@@ -98,6 +99,8 @@
 #define ATTR_stagein  "stagein"
 #define ATTR_stageout "stageout"
 #define ATTR_jobtype  "jobtype"
+#define ATTR_submit_host "submit_host"
+#define ATTR_init_work_dir "init_work_dir"
 
 /* additional job and general attribute names */
 
@@ -143,10 +146,18 @@
 #define ATTR_comp_time   "comp_time"
 #define ATTR_reported    "reported"
 #define ATTR_intcmd      "inter_cmd"
+#define ATTR_P           "proxy_user"
+#define ATTR_exec_gpus   "exec_gpus"
+#define ATTR_J           "job_id"
 
 #ifdef USEJOBCREATE
 #define ATTR_pagg         "pagg_id"
 #endif /* USEJOBCREATE */
+
+#ifdef NVIDIA_GPUS
+  /* JOB_ATR_gpu_flags */
+#define ATTR_gpu_flags         "gpu_flags"
+#endif  /* NVIDIA_GPUS */
 
 /* additional queue attributes names */
 
@@ -158,6 +169,7 @@
 #define ATTR_acluser    "acl_users"
 #define ATTR_altrouter  "alt_router"
 #define ATTR_checkpoint_min  "checkpoint_min"
+#define ATTR_checkpoint_defaults  "checkpoint_defaults"
 #define ATTR_enable     "enabled"
 #define ATTR_fromroute  "from_route_only"
 #define ATTR_hostlist    "hostlist"         /* TORQUE only */
@@ -252,7 +264,22 @@
 #define ATTR_LockfileUpdateTime "lock_file_update_time"
 #define ATTR_LockfileCheckTime "lock_file_check_time"
 #define ATTR_npdefault  "np_default"
+#define ATTR_clonebatchsize "clone_batch_size"
+#define ATTR_clonebatchdelay "clone_batch_delay"
 #define ATTR_jobstarttimeout "job_start_timeout"
+#define ATTR_jobforcecanceltime "job_force_cancel_time"
+#define ATTR_maxarraysize    "max_job_array_size"
+#define ATTR_maxslotlimit    "max_slot_limit"
+#define ATTR_recordjobinfo   "record_job_info"
+#define ATTR_recordjobscript   "record_job_script"
+#define ATTR_joblogfilemaxsize "job_log_file_max_size"
+#define ATTR_joblogfilerolldepth "job_log_file_roll_depth"
+#define ATTR_joblogkeepdays  "job_log_keep_days"
+#ifdef MUNGE_AUTH
+  #define ATTR_authusers       "authorized_users"
+#endif
+#define ATTR_moabarraycompatible "moab_array_compatible"
+#define ATTR_nomailforce       "no_mail_force"
 
 /* additional node "attributes" names */
 
@@ -263,6 +290,8 @@
 #define ATTR_NODE_jobs          "jobs"
 #define ATTR_NODE_status        "status"
 #define ATTR_NODE_note          "note"
+#define ATTR_NODE_gpus           "gpus"
+#define ATTR_NODE_gpustatus      "gpu_status"
 
 /* notification email formating */
 #define ATTR_mailsubjectfmt "mail_subject_fmt"
@@ -277,29 +306,41 @@
 #define NO_KEEP "n"
 #define MAIL_AT_ABORT "a"
 
+#define ARRAY_RANGE "array_range="      /* see qdel.c */
+#define DELDELAY  "deldelay="           /* see qdel.c */
+#define DELPURGE  "delpurge="           /* see qdel.c */
+#define DELASYNC  "delasync"            /* see qdel.c */
+#define PURGECOMP  "purgecomplete="     /* see req_delete.c */
+#define EXECQUEONLY  "exec_queue_only"  /* see req_stat.c */
 
-#define DELDELAY  "deldelay=" /* see qdel.c */
-#define DELPURGE  "delpurge="   /* see qdel.c */
-#define PURGECOMP  "purgecomplete="   /* see req_delete.c */
-#define EXECQUEONLY  "exec_queue_only"   /* see req_stat.c */
 #define RERUNFORCE "force"
 
-#define USER_HOLD "u"
-#define OTHER_HOLD "o"
+#define USER_HOLD   "u"
+#define OTHER_HOLD  "o"
 #define SYSTEM_HOLD "s"
 
 /* node-attribute values (state,ntype) */
 
-#define ND_free   "free"
-#define ND_offline  "offline"
-#define ND_down   "down"
-#define ND_reserve  "reserve"
+#define ND_free          "free"
+#define ND_offline       "offline"
+#define ND_down          "down"
+#define ND_reserve       "reserve"
 #define ND_job_exclusive "job-exclusive"
-#define ND_job_sharing  "job-sharing"
-#define ND_busy   "busy"
+#define ND_job_sharing   "job-sharing"
+#define ND_busy          "busy"
 #define ND_state_unknown "state-unknown"
-#define ND_timeshared  "time-shared"
-#define ND_cluster  "cluster"
+#define ND_timeshared    "time-shared"
+
+/* these are not state values, they describe states and are used in pbsnodes */
+/* active = job-exclusive, job-sharing, or busy */
+#define ND_active        "active"
+/* all = all */
+#define ND_all           "all"
+/* up = job-execlusive, job-sharing, reserve, free, busy and time-shared */
+#define ND_up            "up"
+
+/* this specifies the type of node */
+#define ND_cluster "cluster"
 
 /* queue disallowed types */
 #define Q_DT_batch              "batch"
@@ -359,9 +400,10 @@
 
 #define PBS_MAXUSER  32 /* max user name length */
 #define PBS_MAXGRPN  16 /* max group name length */
+#define PBS_MAXGPUID 16 /* max gpu id length */
 #define PBS_MAXQUEUENAME 15 /* max queue name length */
 #define PBS_MAXSERVERNAME PBS_MAXHOSTNAME /* max server name length */
-#define PBS_MAXJOBARRAYLEN      6       /* number of characters allowed in jobarray portion of job id, including '-' */
+#define PBS_MAXJOBARRAYLEN      7      /* number of characters allowed in jobarray portion of job id, including '[]' */ 
 #define PBS_MAXSEQNUM  8 /* max sequence number length */
 #define PBS_MAXPORTNUM  5 /* udp/tcp port numbers max=16 bits */
 #define PBS_MAXJOBARRAY  99999
@@ -379,7 +421,7 @@
    hex value e.g. 0x00020300 for torque v2.3.0. Now we just increment a value 
    which is added to the last version encoded that way */
 #define PBS_QS_VERSION_BASE 0x00020300 /* magic number do not change */
-#define PBS_QS_VERSION_INT 1 /* increment this version number with every change to the ji_qs struct */
+#define PBS_QS_VERSION_INT 2 /* increment this version number with every change to the ji_qs struct */
 #define PBS_QS_VERSION  (PBS_QS_VERSION_BASE + PBS_QS_VERSION_INT) /* version number saved in the ji_qs struct */
 
 /* someday the PBS_*_PORT definition will go away and only the */
@@ -422,8 +464,9 @@
 #define CHECKPOINTCONT "checkpoint_cont"
 #define MOM_DEFAULT_CHECKPOINT_DIR "$MOMDEFAULTCHECKPOINTDIR$"
 
+#define NO_MOM_RELAY 1
 
-enum batch_op { SET, UNSET, INCR, DECR, EQ, NE, GE, GT, LE, LT, DFLT, MERGE };
+enum batch_op { SET, UNSET, INCR, DECR, EQ, NE, GE, GT, LE, LT, DFLT, MERGE, INCR_OLD };
 
 /*
 ** This structure is identical to attropl so they can be used
