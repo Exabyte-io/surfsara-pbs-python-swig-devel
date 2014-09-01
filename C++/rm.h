@@ -92,7 +92,9 @@ int closerm(int);
 int downrm(int *, int);
 int configrm(int, int *, char *);
 int addreq_err(int, int *, char *);
+/* HvB
 int begin_rm_req(int ,int *,int );
+*/
 int addreq(int, char *);
 int allreq(char *);
 char* getreq_err(int *, int);

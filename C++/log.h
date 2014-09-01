@@ -171,8 +171,9 @@ void log_event (int, int, const char *, const char *);
 
 void log_record (int, int, const char *, const char *);
 
-/* HvB */
+/* HvB 
 bool log_available(int eventtype);
+*/
 
 /* extern void log_roll (int); */
 /* extern long log_size (void); */
