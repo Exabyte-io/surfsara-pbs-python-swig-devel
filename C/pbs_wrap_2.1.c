@@ -3525,6 +3525,8 @@ SWIGINTERN PyObject *_wrap_new_attrl(PyObject *SWIGUNUSEDPARM(self), PyObject *a
       if (SARA_DEBUG) printf("\t\t- %s\n", ptr->name);
       ptr = ptr->next;
     }
+    
+    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   return resultobj;
@@ -3570,6 +3572,8 @@ SWIGINTERN PyObject *_wrap_new_attropl(PyObject *SWIGUNUSEDPARM(self), PyObject 
       PyList_SetItem(resultobj, i, obj_batch); 
       ptr = ptr->next;
     }
+    
+    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   return resultobj;
@@ -3615,6 +3619,7 @@ SWIGINTERN PyObject *_wrap_new_batch_status(PyObject *SWIGUNUSEDPARM(self), PyOb
       }
       ptr = ptr->next;
     }
+    free(ptr);
     
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
@@ -3706,6 +3711,8 @@ SWIGINTERN PyObject *_wrap_attrl_next_get(PyObject *SWIGUNUSEDPARM(self), PyObje
       if (SARA_DEBUG) printf("\t\t- %s\n", ptr->name);
       ptr = ptr->next;
     }
+    
+    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   return resultobj;
@@ -4066,6 +4073,8 @@ SWIGINTERN PyObject *_wrap_attropl_next_get(PyObject *SWIGUNUSEDPARM(self), PyOb
       PyList_SetItem(resultobj, i, obj_batch); 
       ptr = ptr->next;
     }
+    
+    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   return resultobj;
@@ -4435,6 +4444,7 @@ SWIGINTERN PyObject *_wrap_batch_status_next_get(PyObject *SWIGUNUSEDPARM(self),
       }
       ptr = ptr->next;
     }
+    free(ptr);
     
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
@@ -4574,6 +4584,8 @@ SWIGINTERN PyObject *_wrap_batch_status_attribs_get(PyObject *SWIGUNUSEDPARM(sel
       if (SARA_DEBUG) printf("\t\t- %s\n", ptr->name);
       ptr = ptr->next;
     }
+    
+    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   return resultobj;
@@ -6174,6 +6186,7 @@ SWIGINTERN PyObject *_wrap_pbs_statjob(PyObject *SWIGUNUSEDPARM(self), PyObject 
       }
       ptr = ptr->next;
     }
+    free(ptr);
     
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
@@ -6295,6 +6308,7 @@ SWIGINTERN PyObject *_wrap_pbs_selstat(PyObject *SWIGUNUSEDPARM(self), PyObject 
       }
       ptr = ptr->next;
     }
+    free(ptr);
     
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
@@ -6424,6 +6438,7 @@ SWIGINTERN PyObject *_wrap_pbs_statque(PyObject *SWIGUNUSEDPARM(self), PyObject 
       }
       ptr = ptr->next;
     }
+    free(ptr);
     
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
@@ -6545,6 +6560,7 @@ SWIGINTERN PyObject *_wrap_pbs_statserver(PyObject *SWIGUNUSEDPARM(self), PyObje
       }
       ptr = ptr->next;
     }
+    free(ptr);
     
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
@@ -6674,6 +6690,7 @@ SWIGINTERN PyObject *_wrap_pbs_statnode(PyObject *SWIGUNUSEDPARM(self), PyObject
       }
       ptr = ptr->next;
     }
+    free(ptr);
     
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }

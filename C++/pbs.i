@@ -273,6 +273,7 @@
     ptr = ptr->next;
   }
 
+  free(ptr);
   if (SARA_DEBUG) printf("\t</Contents>\n");
 } // end typemap struct batch_status *
 
@@ -300,6 +301,8 @@
     if (SARA_DEBUG) printf("\t\t- %s\n", ptr->name);
     ptr = ptr->next;
   }
+
+  free(ptr);
   if (SARA_DEBUG) printf("\t</Contents>\n");
 } // end typemap struct attrl *
 
@@ -325,6 +328,8 @@
     PyList_SetItem($result, i, obj_batch); 
     ptr = ptr->next;
   }
+
+  free(ptr);
   if (SARA_DEBUG) printf("\t</Contents>\n");
 } // end typemap struct attropl *
 
@@ -355,6 +360,7 @@
       if (SARA_DEBUG) 
         printf("\t\t- %s\n", $1[i]);
    }
+
    if (SARA_DEBUG) 
      printf("\t</Contents>\n");
 } // end typemap char **pbs_selectjob
