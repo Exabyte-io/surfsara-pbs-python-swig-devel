@@ -37,7 +37,7 @@
 /*
  * Convert Python batch status list to a valid C-linked list
 */
-%typemap(in) struct batch_status *BATCH_STATUS {
+%typemap(in) struct batch_status *stat {
   PyObject              *py_obj;
   struct batch_status   *ptr, *prev;
   char                  s[255];
@@ -150,7 +150,7 @@
 /*
  * Convert Python attropl list to a valid C-linked list
 */
-%typemap(in) struct attropl *ATTROPL {
+%typemap(in) struct attropl *attrib {
   PyObject          *py_obj;
   struct attropl    *ptr, *prev;
   char              s[255];
@@ -423,7 +423,7 @@ struct attrl *new_attrl(int number)
   current = ptr + (number - 1);
   for (i=0; i < number; i++)
   { 
-    printf("constructor called\n");
+    // printf("constructor called\n");
     current->name     = (char *) malloc(MAXNAMLEN * sizeof(char));
     current->resource = (char *) malloc(MAXNAMLEN * sizeof(char));
     current->value    = (char *) malloc(MAXNAMLEN * sizeof(char));
@@ -460,7 +460,7 @@ struct attropl *new_attropl(int number)
   current = ptr + (number - 1);
   for (i=0; i < number; i++)
   { 
-    printf("constructor called\n");
+    // printf("constructor called\n");
     current->name     = (char *) malloc(MAXNAMLEN * sizeof(char));
     current->resource = (char *) malloc(MAXNAMLEN * sizeof(char));
     current->value    = (char *) malloc(MAXNAMLEN * sizeof(char));
