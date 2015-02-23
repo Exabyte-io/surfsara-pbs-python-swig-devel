@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cp /usr/include/torque/pbs_ifl.h .
+#cp /usr/include/torque/log.h . 
+cp /usr/include/torque/rm.h .
+
