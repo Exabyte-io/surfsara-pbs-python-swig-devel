@@ -423,7 +423,7 @@ struct attrl *new_attrl(int number)
   current = ptr + (number - 1);
   for (i=0; i < number; i++)
   { 
-    printf("constructor called\n");
+    // printf("constructor called\n");
     current->name     = (char *) malloc(MAXNAMLEN * sizeof(char));
     current->resource = (char *) malloc(MAXNAMLEN * sizeof(char));
     current->value    = (char *) malloc(MAXNAMLEN * sizeof(char));
@@ -460,7 +460,7 @@ struct attropl *new_attropl(int number)
   current = ptr + (number - 1);
   for (i=0; i < number; i++)
   { 
-    printf("constructor called\n");
+    // printf("constructor called\n");
     current->name     = (char *) malloc(MAXNAMLEN * sizeof(char));
     current->resource = (char *) malloc(MAXNAMLEN * sizeof(char));
     current->value    = (char *) malloc(MAXNAMLEN * sizeof(char));
