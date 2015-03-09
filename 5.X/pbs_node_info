@@ -27,7 +27,8 @@ def main():
 #      mom_id = pbs.openrm(node.name, pbs.PBS_MANAGER_SERVICE_PORT)
 
     err = 0
-    mom_id = pbs.openrm(node.name, pbs.PBS_MANAGER_SERVICE_PORT)
+    #mom_id = pbs.openrm(node.name, pbs.PBS_MANAGER_SERVICE_PORT)
+    mom_id = pbs.openrm("localhost", 15003)
     e, e_txt = pbs.error()
     print "openrm", e, e_txt
     print node.name, mom_id, pbs.PBS_MANAGER_SERVICE_PORT
@@ -41,9 +42,9 @@ def main():
     e, e_txt = pbs.error()
     print "addreq:", e, e_txt
 
-    print pbs.activereq()
-    e, e_txt = pbs.error()
-    print "addreq:", e, e_txt
+    #print pbs.activereq()
+    #e, e_txt = pbs.error()
+    #print "addreq:", e, e_txt
 
     #resp = pbs.getreq_err(err, mom_id)
     resp = pbs.getreq(mom_id)
