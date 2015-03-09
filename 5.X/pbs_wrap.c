@@ -3013,14 +3013,18 @@ struct attrl *new_attrl(int number)
     allocate memory as a one block is handy for Python scripts 
     and fill in the next fields so it also works for the C-library
   */
-  printf("basje \n");
+
+  if (SARA_DEBUG)
+  {
+     printf("new_attrl \n");
+  }
   ptr = (struct attrl *) malloc(number * sizeof(struct attrl));
 
   prev = NULL;
   current = ptr + (number - 1);
   for (i=0; i < number; i++)
   { 
-    printf("constructor called\n");
+    // printf("constructor called\n");
     current->name     = (char *) malloc(MAXNAMLEN * sizeof(char));
     current->resource = (char *) malloc(MAXNAMLEN * sizeof(char));
     current->value    = (char *) malloc(MAXNAMLEN * sizeof(char));
@@ -3057,7 +3061,7 @@ struct attropl *new_attropl(int number)
   current = ptr + (number - 1);
   for (i=0; i < number; i++)
   { 
-    printf("constructor called\n");
+    // printf("constructor called\n");
     current->name     = (char *) malloc(MAXNAMLEN * sizeof(char));
     current->resource = (char *) malloc(MAXNAMLEN * sizeof(char));
     current->value    = (char *) malloc(MAXNAMLEN * sizeof(char));
@@ -5549,8 +5553,6 @@ SWIGINTERN PyObject *_wrap_pbs_manager(PyObject *SWIGUNUSEDPARM(self), PyObject 
   int res4 ;
   char *buf4 = 0 ;
   int alloc4 = 0 ;
-  void *argp5 = 0 ;
-  int res5 = 0 ;
   int res6 ;
   char *buf6 = 0 ;
   int alloc6 = 0 ;
@@ -5583,11 +5585,56 @@ SWIGINTERN PyObject *_wrap_pbs_manager(PyObject *SWIGUNUSEDPARM(self), PyObject 
     SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "pbs_manager" "', argument " "4"" of type '" "char *""'");
   }
   arg4 = (char *)(buf4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5,SWIGTYPE_p_attropl, 0 |  0 );
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "pbs_manager" "', argument " "5"" of type '" "struct attropl *""'"); 
+  {
+    PyObject          *py_obj;
+    struct attropl    *ptr, *prev;
+    char              s[255];
+    int               i=0, size=0;
+    
+    // printf("Python --> C\n");
+    
+    if (SARA_DEBUG) printf("Converteren python -> c (struct attropl *):\n");
+    
+    size = Get_List_Size(obj4);
+    
+    if (SARA_DEBUG) printf("\tSize attropl List: %d\n", size);
+    
+    if ( size == -1 ) {
+      PyErr_SetString(PyExc_TypeError, "not a list");
+      return NULL; 
+    }
+    //printf("Size = %d\n", size);
+    
+    if (SARA_DEBUG) printf("\t<Contents>\n");
+    
+    arg5 = prev = NULL;
+    for ( i=0; i < size; i++ ) {
+      py_obj = PyList_GetItem(obj4, i);
+      if (SWIG_ConvertPtr(py_obj, (void **) &ptr, SWIGTYPE_p_attropl, 1)) {
+        sprintf(s,"list item %d has wrong type", i);
+        PyErr_SetString(PyExc_TypeError, s);
+        return NULL;
+        
+        // This will skipp the wrong entry
+        // continue;
+      }
+      
+      /* 
+           * Make first entry head of C linked list
+          */ 
+      if ( i == 0) {
+        arg5 = ptr;
+        ptr->next = prev;
+      }
+      else {
+        prev->next = ptr;
+        ptr->next = NULL;
+      }
+      prev = ptr;
+      
+    } // end for
+    if (SARA_DEBUG) printf("\t</Contents>\n");
   }
-  arg5 = (struct attropl *)(argp5);
   res6 = SWIG_AsCharPtrAndSize(obj5, &buf6, NULL, &alloc6);
   if (!SWIG_IsOK(res6)) {
     SWIG_exception_fail(SWIG_ArgError(res6), "in method '" "pbs_manager" "', argument " "6"" of type '" "char *""'");
@@ -6308,16 +6355,61 @@ fail:
 SWIGINTERN PyObject *_wrap_pbs_statfree(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   struct batch_status *arg1 = (struct batch_status *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
   if (!PyArg_ParseTuple(args,(char *)"O:pbs_statfree",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_batch_status, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pbs_statfree" "', argument " "1"" of type '" "struct batch_status *""'"); 
+  {
+    PyObject              *py_obj;
+    struct batch_status   *ptr, *prev;
+    char                  s[255];
+    int                   i=0, size=0;
+    
+    // printf("Python --> C\n");
+    
+    if (SARA_DEBUG) printf("Converteren python -> c (struct batch_status *):\n");
+    
+    size = Get_List_Size(obj0);
+    if (SARA_DEBUG) printf("\tSize of batch_status list: %d\n", size);
+    
+    if ( size == -1 ) {
+      PyErr_SetString(PyExc_TypeError, "not a list");
+      return NULL; 
+    }
+    // printf("Size = %d\n", size);
+    
+    if (SARA_DEBUG) printf("\t<Contents>\n");
+    
+    arg1 = prev = NULL;
+    for ( i=0; i < size; i++ ) {
+      py_obj = PyList_GetItem(obj0, i);
+      if (SWIG_ConvertPtr(py_obj, (void **) &ptr, SWIGTYPE_p_batch_status, 1)) {
+        sprintf(s,"list item %d has wrong type", i);
+        PyErr_SetString(PyExc_TypeError, s);
+        return NULL;
+        
+        // This will skipp the wrong entry
+        // continue;
+      }
+      
+      /* 
+           * Make first entry head of C linked list
+          */ 
+      if ( i == 0) {
+        arg1 = ptr;
+        ptr->next = prev;
+      }
+      else {
+        prev->next = ptr;
+        ptr->next = NULL;
+      }
+      
+      if (SARA_DEBUG) printf("\t\t- %s\n", ptr->name);
+      prev = ptr;
+      
+    } // end for
+    
+    if (SARA_DEBUG) printf("\t</Contents>\n");
   }
-  arg1 = (struct batch_status *)(argp1);
   pbs_statfree(arg1);
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -6928,8 +7020,6 @@ SWIGINTERN PyObject *_wrap_pbs_submit(PyObject *SWIGUNUSEDPARM(self), PyObject *
   char *arg5 = (char *) 0 ;
   int val1 ;
   int ecode1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
   int res3 ;
   char *buf3 = 0 ;
   int alloc3 = 0 ;
@@ -6952,11 +7042,56 @@ SWIGINTERN PyObject *_wrap_pbs_submit(PyObject *SWIGUNUSEDPARM(self), PyObject *
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "pbs_submit" "', argument " "1"" of type '" "int""'");
   } 
   arg1 = (int)(val1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_attropl, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pbs_submit" "', argument " "2"" of type '" "struct attropl *""'"); 
+  {
+    PyObject          *py_obj;
+    struct attropl    *ptr, *prev;
+    char              s[255];
+    int               i=0, size=0;
+    
+    // printf("Python --> C\n");
+    
+    if (SARA_DEBUG) printf("Converteren python -> c (struct attropl *):\n");
+    
+    size = Get_List_Size(obj1);
+    
+    if (SARA_DEBUG) printf("\tSize attropl List: %d\n", size);
+    
+    if ( size == -1 ) {
+      PyErr_SetString(PyExc_TypeError, "not a list");
+      return NULL; 
+    }
+    //printf("Size = %d\n", size);
+    
+    if (SARA_DEBUG) printf("\t<Contents>\n");
+    
+    arg2 = prev = NULL;
+    for ( i=0; i < size; i++ ) {
+      py_obj = PyList_GetItem(obj1, i);
+      if (SWIG_ConvertPtr(py_obj, (void **) &ptr, SWIGTYPE_p_attropl, 1)) {
+        sprintf(s,"list item %d has wrong type", i);
+        PyErr_SetString(PyExc_TypeError, s);
+        return NULL;
+        
+        // This will skipp the wrong entry
+        // continue;
+      }
+      
+      /* 
+           * Make first entry head of C linked list
+          */ 
+      if ( i == 0) {
+        arg2 = ptr;
+        ptr->next = prev;
+      }
+      else {
+        prev->next = ptr;
+        ptr->next = NULL;
+      }
+      prev = ptr;
+      
+    } // end for
+    if (SARA_DEBUG) printf("\t</Contents>\n");
   }
-  arg2 = (struct attropl *)(argp2);
   res3 = SWIG_AsCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
   if (!SWIG_IsOK(res3)) {
     SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "pbs_submit" "', argument " "3"" of type '" "char *""'");
@@ -7521,7 +7656,7 @@ SWIGINTERN PyObject *_wrap_addreq_err(PyObject *SWIGUNUSEDPARM(self), PyObject *
   char *arg3 = (char *) 0 ;
   int val1 ;
   int ecode1 = 0 ;
-  void *argp2 = 0 ;
+  int temp2 ;
   int res2 = 0 ;
   int res3 ;
   char *buf3 = 0 ;
@@ -7537,11 +7672,16 @@ SWIGINTERN PyObject *_wrap_addreq_err(PyObject *SWIGUNUSEDPARM(self), PyObject *
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "addreq_err" "', argument " "1"" of type '" "int""'");
   } 
   arg1 = (int)(val1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_int, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "addreq_err" "', argument " "2"" of type '" "int *""'"); 
+  if (!(SWIG_IsOK((res2 = SWIG_ConvertPtr(obj1,SWIG_as_voidptrptr(&arg2),SWIGTYPE_p_int,0))))) {
+    int val; 
+    int ecode = SWIG_AsVal_int(obj1, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "addreq_err" "', argument " "2"" of type '" "int""'");
+    }
+    temp2 = (int)(val);
+    arg2 = &temp2;
+    res2 = SWIG_AddTmpMask(ecode);
   }
-  arg2 = (int *)(argp2);
   res3 = SWIG_AsCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
   if (!SWIG_IsOK(res3)) {
     SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "addreq_err" "', argument " "3"" of type '" "char *""'");
@@ -7549,6 +7689,12 @@ SWIGINTERN PyObject *_wrap_addreq_err(PyObject *SWIGUNUSEDPARM(self), PyObject *
   arg3 = (char *)(buf3);
   result = (int)addreq_err(arg1,arg2,arg3);
   resultobj = SWIG_From_int((int)(result));
+  if (SWIG_IsTmpObj(res2)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_int((*arg2)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res2) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg2), SWIGTYPE_p_int, new_flags));
+  }
   if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return resultobj;
 fail:
@@ -7660,7 +7806,7 @@ SWIGINTERN PyObject *_wrap_getreq_err(PyObject *SWIGUNUSEDPARM(self), PyObject *
   PyObject *resultobj = 0;
   int *arg1 = (int *) 0 ;
   int arg2 ;
-  void *argp1 = 0 ;
+  int temp1 ;
   int res1 = 0 ;
   int val2 ;
   int ecode2 = 0 ;
@@ -7669,11 +7815,16 @@ SWIGINTERN PyObject *_wrap_getreq_err(PyObject *SWIGUNUSEDPARM(self), PyObject *
   char *result = 0 ;
   
   if (!PyArg_ParseTuple(args,(char *)"OO:getreq_err",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_int, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getreq_err" "', argument " "1"" of type '" "int *""'"); 
+  if (!(SWIG_IsOK((res1 = SWIG_ConvertPtr(obj0,SWIG_as_voidptrptr(&arg1),SWIGTYPE_p_int,0))))) {
+    int val; 
+    int ecode = SWIG_AsVal_int(obj0, &val);
+    if (!SWIG_IsOK(ecode)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "getreq_err" "', argument " "1"" of type '" "int""'");
+    }
+    temp1 = (int)(val);
+    arg1 = &temp1;
+    res1 = SWIG_AddTmpMask(ecode);
   }
-  arg1 = (int *)(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "getreq_err" "', argument " "2"" of type '" "int""'");
@@ -7681,6 +7832,12 @@ SWIGINTERN PyObject *_wrap_getreq_err(PyObject *SWIGUNUSEDPARM(self), PyObject *
   arg2 = (int)(val2);
   result = (char *)getreq_err(arg1,arg2);
   resultobj = SWIG_FromCharPtr((const char *)result);
+  if (SWIG_IsTmpObj(res1)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_int((*arg1)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res1) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg1), SWIGTYPE_p_int, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;

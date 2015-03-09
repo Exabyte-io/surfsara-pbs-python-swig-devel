@@ -81,7 +81,6 @@
 ** Header file defineing the library calls for connecting
 ** to the resource monitor.
 */
-
 #ifdef __cplusplus
 extern "C"
 {
@@ -91,16 +90,15 @@ int closerm_err(int *, int);
 int closerm(int);
 int downrm(int *, int);
 int configrm(int, int *, char *);
-int addreq_err(int, int *, char *);
+int addreq_err(int, int *INOUT, char *);
 int begin_rm_req(int ,int *,int );
 int addreq(int, char *);
 int allreq(char *);
-char* getreq_err(int *, int);
-char* getreq(int);
+char *getreq_err(int *INOUT, int);
+char *getreq(int);
 int flushreq(void);
 int activereq(void);
 void fullresp(int);
 #ifdef __cplusplus
 }
 #endif
-

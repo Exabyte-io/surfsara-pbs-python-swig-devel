@@ -18,17 +18,45 @@ def main():
     print node.name
     attrs = node.attribs
     for attr in attrs:
-      print '\t', attr.name, ' = ', attr.value
+      print '\t  ', attr.name, ' = ', attr.value
 
-    try:
-      mom_port = socket.getservbyname('pbs_resmom', 'tcp')
-      mom_id = pbs.openrm(node.name, mom_port)
-    except socket.error, detail:
-      mom_id = pbs.openrm(node.name, pbs.PBS_MANAGER_SERVICE_PORT)
+#    try:
+#      mom_port = socket.getservbyname('pbs_resmom', 'tcp')
+#      mom_id = pbs.openrm(node.name, mom_port)
+#    except socket.error, detail:
+#      mom_id = pbs.openrm(node.name, pbs.PBS_MANAGER_SERVICE_PORT)
+
+    err = 0
+    mom_id = pbs.openrm(node.name, pbs.PBS_MANAGER_SERVICE_PORT)
+    e, e_txt = pbs.error()
+    print "openrm", e, e_txt
+    print node.name, mom_id, pbs.PBS_MANAGER_SERVICE_PORT
+    pbs.flushreq()
+    #pbs.fullresp(1)
+    e, e_txt = pbs.error()
+    print "flush", e, e_txt
+
+    #pbs.addreq_err(mom_id, err, "arch")
+    pbs.addreq(mom_id, "arch")
+    e, e_txt = pbs.error()
+    print "addreq:", e, e_txt
+
+    print pbs.activereq()
+    e, e_txt = pbs.error()
+    print "addreq:", e, e_txt
+
+    #resp = pbs.getreq_err(err, mom_id)
+    resp = pbs.getreq(mom_id)
+    e, e_txt = pbs.error()
+    print e, e_txt
+    print err, resp
+
+    sys.exit(1)
+    print 'rm interface'
 
     mom_keys = pbs.get_mom_values(mom_id)
     for key in mom_keys.keys():
-      print '\t %s = %s' %(key, mom_keys[key])
+      print '\t mom %s = %s' %(key, mom_keys[key])
 
     print 'Testing list with user supplied keywords'
 
