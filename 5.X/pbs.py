@@ -840,6 +840,17 @@ MAX_PATH_LEN = _pbs.MAX_PATH_LEN
 SECS_PER_DAY = _pbs.SECS_PER_DAY
 TRUE = _pbs.TRUE
 FALSE = _pbs.FALSE
+PBSE_TOTAL_CEILING = _pbs.PBSE_TOTAL_CEILING
+PBSE_ = _pbs.PBSE_
+PBSE_NONE = _pbs.PBSE_NONE
+
+def pbse_to_txt(*args):
+  return _pbs.pbse_to_txt(*args)
+pbse_to_txt = _pbs.pbse_to_txt
+
+def pbs_strerror(*args):
+  return _pbs.pbs_strerror(*args)
+pbs_strerror = _pbs.pbs_strerror
 #  PBS python interface
 #  Author: Bas van der Vlies <bas.vandervlies@surfsara.nl>
 #  Date  : 27 Feb 2002
@@ -1079,10 +1090,10 @@ def error():
   It says more then a number!
   """
   e = get_error()
-  if errors_txt.has_key(e):
-     return (e, errors_txt[e])
-  else:
-     return (e, "Could not find a text for this error, uhhh")
+  return (e, pbs_strerror(e))
+#     return (e, errors_txt[e])
+#  else:
+#     return (e, "Could not find a text for this error, uhhh")
 
 # This file is compatible with both classic and new-style classes.
 

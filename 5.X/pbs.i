@@ -22,7 +22,7 @@
 #include "rm.h"
 #include "log.h"
 
-#define SARA_DEBUG 0
+#define SARA_DEBUG 1
 
 //extern int pbs_errno;
 
@@ -493,13 +493,9 @@ struct batch_status *new_batch_status()
 
 int get_error()
 {
-   char *errmsg;
-
-   errmsg = pbse_to_txt(pbs_errno);
    if (SARA_DEBUG)
    {
-      printf("Bas = %d\n", pbs_errno);
-      printf("Bas = %d, text = %s\n", pbs_errno, errmsg);
+      printf("Bas pbs_errno = %d, pbs_strerror %s\n", pbs_errno, pbs_strerror(pbs_errno));
    }
    return (pbs_errno);
 }
@@ -520,6 +516,7 @@ int get_error()
 %include "pbs_ifl.h"
 %include "rm.h"
 %include "log.h"
+%include "pbs_error.h"
 
 
 // Iets van uhhh..... obsolete

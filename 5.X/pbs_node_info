@@ -10,9 +10,10 @@ def main():
   c      = pbs.pbs_connect(server)
 
   nodes = pbs.pbs_statnode(c, '', 'NULL', 'NULL')
-  e, txt=  pbs.error()
+  e, txt =  pbs.error()
   if e:
-    print txt
+    print  "statnode erro: %s" %pbs.pbs_strerror(e)
+    print "txt %s\n" %txt
 
   for node in nodes:
     print node.name
@@ -29,16 +30,17 @@ def main():
     err = 0
     #mom_id = pbs.openrm(node.name, pbs.PBS_MANAGER_SERVICE_PORT)
     mom_id = pbs.openrm("localhost", 15003)
+    print mom_id
     e, e_txt = pbs.error()
     print "openrm", e, e_txt
     print node.name, mom_id, pbs.PBS_MANAGER_SERVICE_PORT
-    pbs.flushreq()
+    #pbs.flushreq()
     #pbs.fullresp(1)
-    e, e_txt = pbs.error()
-    print "flush", e, e_txt
+    #e, e_txt = pbs.error()
+    #print "flush", e, e_txt
 
     #pbs.addreq_err(mom_id, err, "arch")
-    pbs.addreq(mom_id, "arch")
+    pbs.addreq(mom_id, "larch")
     e, e_txt = pbs.error()
     print "addreq:", e, e_txt
 

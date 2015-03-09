@@ -91,7 +91,7 @@ def error():
   It says more then a number!
   """
   e = get_error()
-  if errors_txt.has_key(e):
-     return (e, errors_txt[e])
-  else:
-     return (e, "Could not find a text for this error, uhhh")
+  return (e, pbs_strerror(e))
+#     return (e, errors_txt[e])
+#  else:
+#     return (e, "Could not find a text for this error, uhhh")

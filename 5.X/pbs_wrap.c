@@ -2978,7 +2978,7 @@ static swig_module_info swig_module = {swig_types, 11, 0, 0, 0, 0};
 #include "rm.h"
 #include "log.h"
 
-#define SARA_DEBUG 0
+#define SARA_DEBUG 1
 
 //extern int pbs_errno;
 
@@ -3090,13 +3090,9 @@ struct batch_status *new_batch_status()
 
 int get_error()
 {
-   char *errmsg;
-
-   errmsg = pbse_to_txt(pbs_errno);
    if (SARA_DEBUG)
    {
-      printf("Bas = %d\n", pbs_errno);
-      printf("Bas = %d, text = %s\n", pbs_errno, errmsg);
+      printf("Bas pbs_errno = %d, pbs_strerror %s\n", pbs_errno, pbs_strerror(pbs_errno));
    }
    return (pbs_errno);
 }
@@ -8377,6 +8373,73 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_pbse_to_txt(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  char *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:pbse_to_txt",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "pbse_to_txt" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = (int)(val1);
+  result = (char *)pbse_to_txt(arg1);
+  resultobj = SWIG_FromCharPtr((const char *)result);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pbs_strerror(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  char *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:pbs_strerror",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "pbs_strerror" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = (int)(val1);
+  result = (char *)pbs_strerror(arg1);
+  resultobj = SWIG_FromCharPtr((const char *)result);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN int Swig_var_pbs_errno_set(PyObject *_val) {
+  {
+    int val;
+    int res = SWIG_AsVal_int(_val, &val);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""pbs_errno""' of type '""int""'");
+    }
+    pbs_errno = (int)(val);
+  }
+  return 0;
+fail:
+  return 1;
+}
+
+
+SWIGINTERN PyObject *Swig_var_pbs_errno_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_int((int)(pbs_errno));
+  return pyobj;
+}
+
+
 static PyMethodDef SwigMethods[] = {
 	 { (char *)"SWIG_PyInstanceMethod_New", (PyCFunction)SWIG_PyInstanceMethod_New, METH_O, NULL},
 	 { (char *)"new_attrl", _wrap_new_attrl, METH_VARARGS, NULL},
@@ -8489,6 +8552,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"log_available", _wrap_log_available, METH_VARARGS, NULL},
 	 { (char *)"log_init", _wrap_log_init, METH_VARARGS, NULL},
 	 { (char *)"chk_file_sec", _wrap_chk_file_sec, METH_VARARGS, NULL},
+	 { (char *)"pbse_to_txt", _wrap_pbse_to_txt, METH_VARARGS, NULL},
+	 { (char *)"pbs_strerror", _wrap_pbs_strerror, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 
@@ -9639,6 +9704,10 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, "SECS_PER_DAY",SWIG_From_int((int)(86400)));
   SWIG_Python_SetConstant(d, "TRUE",SWIG_From_int((int)(1)));
   SWIG_Python_SetConstant(d, "FALSE",SWIG_From_int((int)(0)));
+  SWIG_Python_SetConstant(d, "PBSE_TOTAL_CEILING",SWIG_From_int((int)(PBSE_TOTAL_CEILING)));
+  SWIG_Python_SetConstant(d, "PBSE_",SWIG_From_int((int)(15000)));
+  SWIG_Python_SetConstant(d, "PBSE_NONE",SWIG_From_int((int)(0)));
+  SWIG_addvarlink(SWIG_globals(),(char*)"pbs_errno",Swig_var_pbs_errno_get, Swig_var_pbs_errno_set);
 #if PY_VERSION_HEX >= 0x03000000
   return m;
 #else

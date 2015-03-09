@@ -1,8 +1,9 @@
 #!/bin/sh
 
-cp /usr/include/torque/pbs_ifl.h .
 #cp /usr/include/torque/log.h . 
 cp /usr/include/torque/rm.h .
+
+## No changes
 cp /usr/include/torque/pbs_error.h . 
-
-
+cp /usr/include/torque/pbs_error_db.h . 
+cp /usr/include/torque/pbs_ifl.h .
