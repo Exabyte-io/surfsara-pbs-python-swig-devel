@@ -1,9 +1,16 @@
 #!/bin/sh
 
-#cp /usr/include/torque/log.h . 
-cp /usr/include/torque/rm.h .
+INCLUDE_DIR=/usr/include/torque
+
+
+cat $INCLUDE_DIR/log.h | sed -e 's:extern int LOGLEVEL:// extern int LOGLEVEL:g' > log.h
 
 ## No changes
-cp /usr/include/torque/pbs_error.h . 
-cp /usr/include/torque/pbs_error_db.h . 
-cp /usr/include/torque/pbs_ifl.h .
+cp $INCLUDE_DIR/pbs_error.h . 
+cp $INCLUDE_DIR/pbs_error_db.h . 
+cp $INCLUDE_DIR/pbs_ifl.h .
+
+## todo
+## int addreq_err(int, int *INOUT, char *); 
+## char* getreq_err(int *INOUT, int); 
+cp $INCLUDE_DIR/rm.h .
