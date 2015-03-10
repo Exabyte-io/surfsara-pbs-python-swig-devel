@@ -27,10 +27,7 @@ def main():
 #    except socket.error, detail:
 #      mom_id = pbs.openrm(node.name, pbs.PBS_MANAGER_SERVICE_PORT)
 
-    err = 0
-    #mom_id = pbs.openrm(node.name, pbs.PBS_MANAGER_SERVICE_PORT)
-    mom_id = pbs.openrm("localhost", 15003)
-    print mom_id
+    mom_id = pbs.openrm(node.name, pbs.PBS_MANAGER_SERVICE_PORT)
     e, e_txt = pbs.error()
     print "openrm", e, e_txt
     print node.name, mom_id, pbs.PBS_MANAGER_SERVICE_PORT
@@ -40,7 +37,7 @@ def main():
     #print "flush", e, e_txt
 
     #pbs.addreq_err(mom_id, err, "arch")
-    pbs.addreq(mom_id, "larch")
+    pbs.addreq(mom_id, "arch")
     e, e_txt = pbs.error()
     print "addreq:", e, e_txt
 
@@ -52,9 +49,7 @@ def main():
     resp = pbs.getreq(mom_id)
     e, e_txt = pbs.error()
     print e, e_txt
-    print err, resp
 
-    sys.exit(1)
     print 'rm interface'
 
     mom_keys = pbs.get_mom_values(mom_id)

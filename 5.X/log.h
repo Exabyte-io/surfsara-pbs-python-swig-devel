@@ -150,7 +150,7 @@
 enum getter_setter { GETV, SETV };
 typedef enum getter_setter SGetter;
 
-// HvB extern int LOGLEVEL;
+// extern int LOGLEVEL;
 
 extern long *log_event_mask;
 extern pthread_mutex_t log_mutex;

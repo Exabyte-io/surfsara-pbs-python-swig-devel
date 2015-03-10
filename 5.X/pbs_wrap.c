@@ -2978,9 +2978,7 @@ static swig_module_info swig_module = {swig_types, 11, 0, 0, 0, 0};
 #include "rm.h"
 #include "log.h"
 
-#define SARA_DEBUG 1
-
-//extern int pbs_errno;
+#define SARA_DEBUG 0
 
 
 
@@ -3457,9 +3455,7 @@ SWIGINTERN void delete_attrl(struct attrl *self){
     if (SARA_DEBUG)
        printf("Bas free attrl\n");
 
-    /*
-  	free(self);
-    */
+    // free(self);
   }
 SWIGINTERN char *attropl___str__(struct attropl *self){
     static char temp[4 * 255] ;
@@ -3472,9 +3468,7 @@ SWIGINTERN void delete_attropl(struct attropl *self){
     if (SARA_DEBUG)
        printf("Bas free attropl\n");
 
-    /*
-  	free(self);
-    */
+    // free(self);
   }
 
 SWIGINTERN int
@@ -3546,7 +3540,7 @@ SWIGINTERN PyObject *_wrap_new_attrl(PyObject *SWIGUNUSEDPARM(self), PyObject *a
     struct attrl  *ptr;
     int           i=0, len=0;
     
-    if (SARA_DEBUG) printf("Converteren c (struct attrl *) -> python:\n");
+    if (SARA_DEBUG) printf("Convert c (struct attrl *) -> python:\n");
     
     ptr = result;
     while (ptr != NULL) {
@@ -3565,8 +3559,6 @@ SWIGINTERN PyObject *_wrap_new_attrl(PyObject *SWIGUNUSEDPARM(self), PyObject *a
       if (SARA_DEBUG) printf("\t\t- %s\n", ptr->name);
       ptr = ptr->next;
     }
-    
-    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   return resultobj;
@@ -3595,7 +3587,7 @@ SWIGINTERN PyObject *_wrap_new_attropl(PyObject *SWIGUNUSEDPARM(self), PyObject 
     struct attropl    *ptr;
     int               i=0, len=0;
     
-    if (SARA_DEBUG) printf("Converteren c (struct attropl *) -> python:\n");
+    if (SARA_DEBUG) printf("Convert c (struct attropl *) -> python:\n");
     
     ptr = result;
     while (ptr != NULL) {
@@ -3613,7 +3605,6 @@ SWIGINTERN PyObject *_wrap_new_attropl(PyObject *SWIGUNUSEDPARM(self), PyObject 
       ptr = ptr->next;
     }
     
-    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   return resultobj;
@@ -3630,15 +3621,15 @@ SWIGINTERN PyObject *_wrap_new_batch_status(PyObject *SWIGUNUSEDPARM(self), PyOb
   result = (struct batch_status *)new_batch_status();
   {
     PyObject              *obj_batch;
-    struct batch_status   *ptr;
+    struct batch_status   *ptr, *org;
     int                   i=0, len=0;
     
-    // printf("Ja we are in bussniss\n");
-    if (SARA_DEBUG) printf("Converteren c (struct batch_status *) -> python:\n");
+    if (SARA_DEBUG) printf("Convert c (struct batch_status *) -> python:\n");
     
     // Deterime length of list
     //
-    ptr = result;
+    org = result;
+    ptr = org;
     while (ptr != NULL) {
       len++;
       ptr = ptr->next;
@@ -3660,7 +3651,6 @@ SWIGINTERN PyObject *_wrap_new_batch_status(PyObject *SWIGUNUSEDPARM(self), PyOb
       ptr = ptr->next;
     }
     
-    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   return resultobj;
@@ -3821,7 +3811,7 @@ SWIGINTERN PyObject *_wrap_attrlArray_cast(PyObject *SWIGUNUSEDPARM(self), PyObj
     struct attrl  *ptr;
     int           i=0, len=0;
     
-    if (SARA_DEBUG) printf("Converteren c (struct attrl *) -> python:\n");
+    if (SARA_DEBUG) printf("Convert c (struct attrl *) -> python:\n");
     
     ptr = result;
     while (ptr != NULL) {
@@ -3840,8 +3830,6 @@ SWIGINTERN PyObject *_wrap_attrlArray_cast(PyObject *SWIGUNUSEDPARM(self), PyObj
       if (SARA_DEBUG) printf("\t\t- %s\n", ptr->name);
       ptr = ptr->next;
     }
-    
-    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   return resultobj;
@@ -3929,7 +3917,7 @@ SWIGINTERN PyObject *_wrap_attrl_next_get(PyObject *SWIGUNUSEDPARM(self), PyObje
     struct attrl  *ptr;
     int           i=0, len=0;
     
-    if (SARA_DEBUG) printf("Converteren c (struct attrl *) -> python:\n");
+    if (SARA_DEBUG) printf("Convert c (struct attrl *) -> python:\n");
     
     ptr = result;
     while (ptr != NULL) {
@@ -3948,8 +3936,6 @@ SWIGINTERN PyObject *_wrap_attrl_next_get(PyObject *SWIGUNUSEDPARM(self), PyObje
       if (SARA_DEBUG) printf("\t\t- %s\n", ptr->name);
       ptr = ptr->next;
     }
-    
-    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   return resultobj;
@@ -4293,7 +4279,7 @@ SWIGINTERN PyObject *_wrap_attropl_next_get(PyObject *SWIGUNUSEDPARM(self), PyOb
     struct attropl    *ptr;
     int               i=0, len=0;
     
-    if (SARA_DEBUG) printf("Converteren c (struct attropl *) -> python:\n");
+    if (SARA_DEBUG) printf("Convert c (struct attropl *) -> python:\n");
     
     ptr = result;
     while (ptr != NULL) {
@@ -4311,7 +4297,6 @@ SWIGINTERN PyObject *_wrap_attropl_next_get(PyObject *SWIGUNUSEDPARM(self), PyOb
       ptr = ptr->next;
     }
     
-    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   return resultobj;
@@ -4652,15 +4637,15 @@ SWIGINTERN PyObject *_wrap_batch_status_next_get(PyObject *SWIGUNUSEDPARM(self),
   result = (struct batch_status *) ((arg1)->next);
   {
     PyObject              *obj_batch;
-    struct batch_status   *ptr;
+    struct batch_status   *ptr, *org;
     int                   i=0, len=0;
     
-    // printf("Ja we are in bussniss\n");
-    if (SARA_DEBUG) printf("Converteren c (struct batch_status *) -> python:\n");
+    if (SARA_DEBUG) printf("Convert c (struct batch_status *) -> python:\n");
     
     // Deterime length of list
     //
-    ptr = result;
+    org = result;
+    ptr = org;
     while (ptr != NULL) {
       len++;
       ptr = ptr->next;
@@ -4682,7 +4667,6 @@ SWIGINTERN PyObject *_wrap_batch_status_next_get(PyObject *SWIGUNUSEDPARM(self),
       ptr = ptr->next;
     }
     
-    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   return resultobj;
@@ -4802,7 +4786,7 @@ SWIGINTERN PyObject *_wrap_batch_status_attribs_get(PyObject *SWIGUNUSEDPARM(sel
     struct attrl  *ptr;
     int           i=0, len=0;
     
-    if (SARA_DEBUG) printf("Converteren c (struct attrl *) -> python:\n");
+    if (SARA_DEBUG) printf("Convert c (struct attrl *) -> python:\n");
     
     ptr = result;
     while (ptr != NULL) {
@@ -4821,8 +4805,6 @@ SWIGINTERN PyObject *_wrap_batch_status_attribs_get(PyObject *SWIGUNUSEDPARM(sel
       if (SARA_DEBUG) printf("\t\t- %s\n", ptr->name);
       ptr = ptr->next;
     }
-    
-    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   return resultobj;
@@ -5058,7 +5040,7 @@ SWIGINTERN PyObject *_wrap_pbs_alterjob_async(PyObject *SWIGUNUSEDPARM(self), Py
     
     // printf("Python --> C\n");
     
-    if (SARA_DEBUG) printf("Converteren python -> c (struct attrl *):\n");
+    if (SARA_DEBUG) printf("Convert python -> c (struct attrl *):\n");
     
     size = Get_List_Size(obj2);
     if (SARA_DEBUG) printf("\tSize of attrl List: %d\n", size);
@@ -5078,7 +5060,7 @@ SWIGINTERN PyObject *_wrap_pbs_alterjob_async(PyObject *SWIGUNUSEDPARM(self), Py
         PyErr_SetString(PyExc_TypeError, s);
         return NULL;
         
-        // This will skipp the wrong entry
+        // This will skip the wrong entry
         // continue;
       }
       
@@ -5098,6 +5080,7 @@ SWIGINTERN PyObject *_wrap_pbs_alterjob_async(PyObject *SWIGUNUSEDPARM(self), Py
       prev = ptr;
       
     } // end for
+    
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   res4 = SWIG_AsCharPtrAndSize(obj3, &buf4, NULL, &alloc4);
@@ -5156,7 +5139,7 @@ SWIGINTERN PyObject *_wrap_pbs_alterjob(PyObject *SWIGUNUSEDPARM(self), PyObject
     
     // printf("Python --> C\n");
     
-    if (SARA_DEBUG) printf("Converteren python -> c (struct attrl *):\n");
+    if (SARA_DEBUG) printf("Convert python -> c (struct attrl *):\n");
     
     size = Get_List_Size(obj2);
     if (SARA_DEBUG) printf("\tSize of attrl List: %d\n", size);
@@ -5176,7 +5159,7 @@ SWIGINTERN PyObject *_wrap_pbs_alterjob(PyObject *SWIGUNUSEDPARM(self), PyObject
         PyErr_SetString(PyExc_TypeError, s);
         return NULL;
         
-        // This will skipp the wrong entry
+        // This will skip the wrong entry
         // continue;
       }
       
@@ -5196,6 +5179,7 @@ SWIGINTERN PyObject *_wrap_pbs_alterjob(PyObject *SWIGUNUSEDPARM(self), PyObject
       prev = ptr;
       
     } // end for
+    
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   res4 = SWIG_AsCharPtrAndSize(obj3, &buf4, NULL, &alloc4);
@@ -5589,7 +5573,7 @@ SWIGINTERN PyObject *_wrap_pbs_manager(PyObject *SWIGUNUSEDPARM(self), PyObject 
     
     // printf("Python --> C\n");
     
-    if (SARA_DEBUG) printf("Converteren python -> c (struct attropl *):\n");
+    if (SARA_DEBUG) printf("Convert python -> c (struct attropl *):\n");
     
     size = Get_List_Size(obj4);
     
@@ -6199,7 +6183,7 @@ SWIGINTERN PyObject *_wrap_pbs_selectjob(PyObject *SWIGUNUSEDPARM(self), PyObjec
     int len=0, i;
     
     if (SARA_DEBUG) 
-    printf("Converteren char ** -> python list\n");
+    printf("Convert char ** -> python list\n");
     
     
     if (result == NULL) 
@@ -6360,9 +6344,7 @@ SWIGINTERN PyObject *_wrap_pbs_statfree(PyObject *SWIGUNUSEDPARM(self), PyObject
     char                  s[255];
     int                   i=0, size=0;
     
-    // printf("Python --> C\n");
-    
-    if (SARA_DEBUG) printf("Converteren python -> c (struct batch_status *):\n");
+    if (SARA_DEBUG) printf("Convert python -> c (struct batch_status *):\n");
     
     size = Get_List_Size(obj0);
     if (SARA_DEBUG) printf("\tSize of batch_status list: %d\n", size);
@@ -6453,7 +6435,7 @@ SWIGINTERN PyObject *_wrap_pbs_statjob(PyObject *SWIGUNUSEDPARM(self), PyObject 
     
     // printf("Python --> C\n");
     
-    if (SARA_DEBUG) printf("Converteren python -> c (struct attrl *):\n");
+    if (SARA_DEBUG) printf("Convert python -> c (struct attrl *):\n");
     
     size = Get_List_Size(obj2);
     if (SARA_DEBUG) printf("\tSize of attrl List: %d\n", size);
@@ -6473,7 +6455,7 @@ SWIGINTERN PyObject *_wrap_pbs_statjob(PyObject *SWIGUNUSEDPARM(self), PyObject 
         PyErr_SetString(PyExc_TypeError, s);
         return NULL;
         
-        // This will skipp the wrong entry
+        // This will skip the wrong entry
         // continue;
       }
       
@@ -6493,6 +6475,7 @@ SWIGINTERN PyObject *_wrap_pbs_statjob(PyObject *SWIGUNUSEDPARM(self), PyObject 
       prev = ptr;
       
     } // end for
+    
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   res4 = SWIG_AsCharPtrAndSize(obj3, &buf4, NULL, &alloc4);
@@ -6503,15 +6486,15 @@ SWIGINTERN PyObject *_wrap_pbs_statjob(PyObject *SWIGUNUSEDPARM(self), PyObject 
   result = (struct batch_status *)pbs_statjob(arg1,arg2,arg3,arg4);
   {
     PyObject              *obj_batch;
-    struct batch_status   *ptr;
+    struct batch_status   *ptr, *org;
     int                   i=0, len=0;
     
-    // printf("Ja we are in bussniss\n");
-    if (SARA_DEBUG) printf("Converteren c (struct batch_status *) -> python:\n");
+    if (SARA_DEBUG) printf("Convert c (struct batch_status *) -> python:\n");
     
     // Deterime length of list
     //
-    ptr = result;
+    org = result;
+    ptr = org;
     while (ptr != NULL) {
       len++;
       ptr = ptr->next;
@@ -6533,7 +6516,6 @@ SWIGINTERN PyObject *_wrap_pbs_statjob(PyObject *SWIGUNUSEDPARM(self), PyObject 
       ptr = ptr->next;
     }
     
-    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
@@ -6582,15 +6564,15 @@ SWIGINTERN PyObject *_wrap_pbs_selstat(PyObject *SWIGUNUSEDPARM(self), PyObject 
   result = (struct batch_status *)pbs_selstat(arg1,arg2,arg3);
   {
     PyObject              *obj_batch;
-    struct batch_status   *ptr;
+    struct batch_status   *ptr, *org;
     int                   i=0, len=0;
     
-    // printf("Ja we are in bussniss\n");
-    if (SARA_DEBUG) printf("Converteren c (struct batch_status *) -> python:\n");
+    if (SARA_DEBUG) printf("Convert c (struct batch_status *) -> python:\n");
     
     // Deterime length of list
     //
-    ptr = result;
+    org = result;
+    ptr = org;
     while (ptr != NULL) {
       len++;
       ptr = ptr->next;
@@ -6612,7 +6594,6 @@ SWIGINTERN PyObject *_wrap_pbs_selstat(PyObject *SWIGUNUSEDPARM(self), PyObject 
       ptr = ptr->next;
     }
     
-    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
@@ -6662,7 +6643,7 @@ SWIGINTERN PyObject *_wrap_pbs_statque(PyObject *SWIGUNUSEDPARM(self), PyObject 
     
     // printf("Python --> C\n");
     
-    if (SARA_DEBUG) printf("Converteren python -> c (struct attrl *):\n");
+    if (SARA_DEBUG) printf("Convert python -> c (struct attrl *):\n");
     
     size = Get_List_Size(obj2);
     if (SARA_DEBUG) printf("\tSize of attrl List: %d\n", size);
@@ -6682,7 +6663,7 @@ SWIGINTERN PyObject *_wrap_pbs_statque(PyObject *SWIGUNUSEDPARM(self), PyObject 
         PyErr_SetString(PyExc_TypeError, s);
         return NULL;
         
-        // This will skipp the wrong entry
+        // This will skip the wrong entry
         // continue;
       }
       
@@ -6702,6 +6683,7 @@ SWIGINTERN PyObject *_wrap_pbs_statque(PyObject *SWIGUNUSEDPARM(self), PyObject 
       prev = ptr;
       
     } // end for
+    
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   res4 = SWIG_AsCharPtrAndSize(obj3, &buf4, NULL, &alloc4);
@@ -6712,15 +6694,15 @@ SWIGINTERN PyObject *_wrap_pbs_statque(PyObject *SWIGUNUSEDPARM(self), PyObject 
   result = (struct batch_status *)pbs_statque(arg1,arg2,arg3,arg4);
   {
     PyObject              *obj_batch;
-    struct batch_status   *ptr;
+    struct batch_status   *ptr, *org;
     int                   i=0, len=0;
     
-    // printf("Ja we are in bussniss\n");
-    if (SARA_DEBUG) printf("Converteren c (struct batch_status *) -> python:\n");
+    if (SARA_DEBUG) printf("Convert c (struct batch_status *) -> python:\n");
     
     // Deterime length of list
     //
-    ptr = result;
+    org = result;
+    ptr = org;
     while (ptr != NULL) {
       len++;
       ptr = ptr->next;
@@ -6742,7 +6724,6 @@ SWIGINTERN PyObject *_wrap_pbs_statque(PyObject *SWIGUNUSEDPARM(self), PyObject 
       ptr = ptr->next;
     }
     
-    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
@@ -6784,7 +6765,7 @@ SWIGINTERN PyObject *_wrap_pbs_statserver(PyObject *SWIGUNUSEDPARM(self), PyObje
     
     // printf("Python --> C\n");
     
-    if (SARA_DEBUG) printf("Converteren python -> c (struct attrl *):\n");
+    if (SARA_DEBUG) printf("Convert python -> c (struct attrl *):\n");
     
     size = Get_List_Size(obj1);
     if (SARA_DEBUG) printf("\tSize of attrl List: %d\n", size);
@@ -6804,7 +6785,7 @@ SWIGINTERN PyObject *_wrap_pbs_statserver(PyObject *SWIGUNUSEDPARM(self), PyObje
         PyErr_SetString(PyExc_TypeError, s);
         return NULL;
         
-        // This will skipp the wrong entry
+        // This will skip the wrong entry
         // continue;
       }
       
@@ -6824,6 +6805,7 @@ SWIGINTERN PyObject *_wrap_pbs_statserver(PyObject *SWIGUNUSEDPARM(self), PyObje
       prev = ptr;
       
     } // end for
+    
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   res3 = SWIG_AsCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
@@ -6834,15 +6816,15 @@ SWIGINTERN PyObject *_wrap_pbs_statserver(PyObject *SWIGUNUSEDPARM(self), PyObje
   result = (struct batch_status *)pbs_statserver(arg1,arg2,arg3);
   {
     PyObject              *obj_batch;
-    struct batch_status   *ptr;
+    struct batch_status   *ptr, *org;
     int                   i=0, len=0;
     
-    // printf("Ja we are in bussniss\n");
-    if (SARA_DEBUG) printf("Converteren c (struct batch_status *) -> python:\n");
+    if (SARA_DEBUG) printf("Convert c (struct batch_status *) -> python:\n");
     
     // Deterime length of list
     //
-    ptr = result;
+    org = result;
+    ptr = org;
     while (ptr != NULL) {
       len++;
       ptr = ptr->next;
@@ -6864,7 +6846,6 @@ SWIGINTERN PyObject *_wrap_pbs_statserver(PyObject *SWIGUNUSEDPARM(self), PyObje
       ptr = ptr->next;
     }
     
-    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
@@ -6914,7 +6895,7 @@ SWIGINTERN PyObject *_wrap_pbs_statnode(PyObject *SWIGUNUSEDPARM(self), PyObject
     
     // printf("Python --> C\n");
     
-    if (SARA_DEBUG) printf("Converteren python -> c (struct attrl *):\n");
+    if (SARA_DEBUG) printf("Convert python -> c (struct attrl *):\n");
     
     size = Get_List_Size(obj2);
     if (SARA_DEBUG) printf("\tSize of attrl List: %d\n", size);
@@ -6934,7 +6915,7 @@ SWIGINTERN PyObject *_wrap_pbs_statnode(PyObject *SWIGUNUSEDPARM(self), PyObject
         PyErr_SetString(PyExc_TypeError, s);
         return NULL;
         
-        // This will skipp the wrong entry
+        // This will skip the wrong entry
         // continue;
       }
       
@@ -6954,6 +6935,7 @@ SWIGINTERN PyObject *_wrap_pbs_statnode(PyObject *SWIGUNUSEDPARM(self), PyObject
       prev = ptr;
       
     } // end for
+    
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   res4 = SWIG_AsCharPtrAndSize(obj3, &buf4, NULL, &alloc4);
@@ -6964,15 +6946,15 @@ SWIGINTERN PyObject *_wrap_pbs_statnode(PyObject *SWIGUNUSEDPARM(self), PyObject
   result = (struct batch_status *)pbs_statnode(arg1,arg2,arg3,arg4);
   {
     PyObject              *obj_batch;
-    struct batch_status   *ptr;
+    struct batch_status   *ptr, *org;
     int                   i=0, len=0;
     
-    // printf("Ja we are in bussniss\n");
-    if (SARA_DEBUG) printf("Converteren c (struct batch_status *) -> python:\n");
+    if (SARA_DEBUG) printf("Convert c (struct batch_status *) -> python:\n");
     
     // Deterime length of list
     //
-    ptr = result;
+    org = result;
+    ptr = org;
     while (ptr != NULL) {
       len++;
       ptr = ptr->next;
@@ -6994,7 +6976,6 @@ SWIGINTERN PyObject *_wrap_pbs_statnode(PyObject *SWIGUNUSEDPARM(self), PyObject
       ptr = ptr->next;
     }
     
-    free(ptr);
     if (SARA_DEBUG) printf("\t</Contents>\n");
   }
   if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
@@ -7046,7 +7027,7 @@ SWIGINTERN PyObject *_wrap_pbs_submit(PyObject *SWIGUNUSEDPARM(self), PyObject *
     
     // printf("Python --> C\n");
     
-    if (SARA_DEBUG) printf("Converteren python -> c (struct attropl *):\n");
+    if (SARA_DEBUG) printf("Convert python -> c (struct attropl *):\n");
     
     size = Get_List_Size(obj1);
     
@@ -7652,7 +7633,7 @@ SWIGINTERN PyObject *_wrap_addreq_err(PyObject *SWIGUNUSEDPARM(self), PyObject *
   char *arg3 = (char *) 0 ;
   int val1 ;
   int ecode1 = 0 ;
-  int temp2 ;
+  void *argp2 = 0 ;
   int res2 = 0 ;
   int res3 ;
   char *buf3 = 0 ;
@@ -7668,16 +7649,11 @@ SWIGINTERN PyObject *_wrap_addreq_err(PyObject *SWIGUNUSEDPARM(self), PyObject *
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "addreq_err" "', argument " "1"" of type '" "int""'");
   } 
   arg1 = (int)(val1);
-  if (!(SWIG_IsOK((res2 = SWIG_ConvertPtr(obj1,SWIG_as_voidptrptr(&arg2),SWIGTYPE_p_int,0))))) {
-    int val; 
-    int ecode = SWIG_AsVal_int(obj1, &val);
-    if (!SWIG_IsOK(ecode)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "addreq_err" "', argument " "2"" of type '" "int""'");
-    }
-    temp2 = (int)(val);
-    arg2 = &temp2;
-    res2 = SWIG_AddTmpMask(ecode);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_int, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "addreq_err" "', argument " "2"" of type '" "int *""'"); 
   }
+  arg2 = (int *)(argp2);
   res3 = SWIG_AsCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
   if (!SWIG_IsOK(res3)) {
     SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "addreq_err" "', argument " "3"" of type '" "char *""'");
@@ -7685,12 +7661,6 @@ SWIGINTERN PyObject *_wrap_addreq_err(PyObject *SWIGUNUSEDPARM(self), PyObject *
   arg3 = (char *)(buf3);
   result = (int)addreq_err(arg1,arg2,arg3);
   resultobj = SWIG_From_int((int)(result));
-  if (SWIG_IsTmpObj(res2)) {
-    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_int((*arg2)));
-  } else {
-    int new_flags = SWIG_IsNewObj(res2) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
-    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg2), SWIGTYPE_p_int, new_flags));
-  }
   if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   return resultobj;
 fail:
@@ -7802,7 +7772,7 @@ SWIGINTERN PyObject *_wrap_getreq_err(PyObject *SWIGUNUSEDPARM(self), PyObject *
   PyObject *resultobj = 0;
   int *arg1 = (int *) 0 ;
   int arg2 ;
-  int temp1 ;
+  void *argp1 = 0 ;
   int res1 = 0 ;
   int val2 ;
   int ecode2 = 0 ;
@@ -7811,16 +7781,11 @@ SWIGINTERN PyObject *_wrap_getreq_err(PyObject *SWIGUNUSEDPARM(self), PyObject *
   char *result = 0 ;
   
   if (!PyArg_ParseTuple(args,(char *)"OO:getreq_err",&obj0,&obj1)) SWIG_fail;
-  if (!(SWIG_IsOK((res1 = SWIG_ConvertPtr(obj0,SWIG_as_voidptrptr(&arg1),SWIGTYPE_p_int,0))))) {
-    int val; 
-    int ecode = SWIG_AsVal_int(obj0, &val);
-    if (!SWIG_IsOK(ecode)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode), "in method '" "getreq_err" "', argument " "1"" of type '" "int""'");
-    }
-    temp1 = (int)(val);
-    arg1 = &temp1;
-    res1 = SWIG_AddTmpMask(ecode);
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_int, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getreq_err" "', argument " "1"" of type '" "int *""'"); 
   }
+  arg1 = (int *)(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "getreq_err" "', argument " "2"" of type '" "int""'");
@@ -7828,12 +7793,6 @@ SWIGINTERN PyObject *_wrap_getreq_err(PyObject *SWIGUNUSEDPARM(self), PyObject *
   arg2 = (int)(val2);
   result = (char *)getreq_err(arg1,arg2);
   resultobj = SWIG_FromCharPtr((const char *)result);
-  if (SWIG_IsTmpObj(res1)) {
-    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_int((*arg1)));
-  } else {
-    int new_flags = SWIG_IsNewObj(res1) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
-    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg1), SWIGTYPE_p_int, new_flags));
-  }
   return resultobj;
 fail:
   return NULL;

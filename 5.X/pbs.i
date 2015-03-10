@@ -22,9 +22,7 @@
 #include "rm.h"
 #include "log.h"
 
-#define SARA_DEBUG 1
-
-//extern int pbs_errno;
+#define SARA_DEBUG 0
 
 %}
 
@@ -43,9 +41,7 @@
   char                  s[255];
   int                   i=0, size=0;
 
-  // printf("Python --> C\n");
-
-  if (SARA_DEBUG) printf("Converteren python -> c (struct batch_status *):\n");
+  if (SARA_DEBUG) printf("Convert python -> c (struct batch_status *):\n");
 
   size = Get_List_Size($input);
   if (SARA_DEBUG) printf("\tSize of batch_status list: %d\n", size);
@@ -103,7 +99,7 @@
 
   // printf("Python --> C\n");
 
-  if (SARA_DEBUG) printf("Converteren python -> c (struct attrl *):\n");
+  if (SARA_DEBUG) printf("Convert python -> c (struct attrl *):\n");
 
   size = Get_List_Size($input);
   if (SARA_DEBUG) printf("\tSize of attrl List: %d\n", size);
@@ -124,7 +120,7 @@
       PyErr_SetString(PyExc_TypeError, s);
       return NULL;
 
-      // This will skipp the wrong entry
+      // This will skip the wrong entry
       // continue;
     }
 
@@ -144,6 +140,7 @@
     prev = ptr;
 
   } // end for
+
   if (SARA_DEBUG) printf("\t</Contents>\n");
 } // end struct attrl *IN typemap
 
@@ -158,7 +155,7 @@
 
   // printf("Python --> C\n");
 
-  if (SARA_DEBUG) printf("Converteren python -> c (struct attropl *):\n");
+  if (SARA_DEBUG) printf("Convert python -> c (struct attropl *):\n");
 
   size = Get_List_Size($input);
 
@@ -243,15 +240,15 @@
 %typemap(out) struct batch_status * {
 
   PyObject              *obj_batch;
-  struct batch_status   *ptr;
+  struct batch_status   *ptr, *org;
   int                   i=0, len=0;
 
-  // printf("Ja we are in bussniss\n");
-  if (SARA_DEBUG) printf("Converteren c (struct batch_status *) -> python:\n");
+  if (SARA_DEBUG) printf("Convert c (struct batch_status *) -> python:\n");
  
   // Deterime length of list
   //
-  ptr = $1;
+  org = $1;
+  ptr = org;
   while (ptr != NULL) {
     len++;
     ptr = ptr->next;
@@ -273,7 +270,6 @@
     ptr = ptr->next;
   }
 
-  free(ptr);
   if (SARA_DEBUG) printf("\t</Contents>\n");
 } // end typemap struct batch_status *
 
@@ -282,7 +278,7 @@
   struct attrl  *ptr;
   int           i=0, len=0;
 
-  if (SARA_DEBUG) printf("Converteren c (struct attrl *) -> python:\n");
+  if (SARA_DEBUG) printf("Convert c (struct attrl *) -> python:\n");
 
   ptr = $1;
   while (ptr != NULL) {
@@ -301,8 +297,6 @@
     if (SARA_DEBUG) printf("\t\t- %s\n", ptr->name);
     ptr = ptr->next;
   }
-
-  free(ptr);
   if (SARA_DEBUG) printf("\t</Contents>\n");
 } // end typemap struct attrl *
 
@@ -311,7 +305,7 @@
   struct attropl    *ptr;
   int               i=0, len=0;
 
-  if (SARA_DEBUG) printf("Converteren c (struct attropl *) -> python:\n");
+  if (SARA_DEBUG) printf("Convert c (struct attropl *) -> python:\n");
   
   ptr = $1;
   while (ptr != NULL) {
@@ -329,7 +323,6 @@
     ptr = ptr->next;
   }
 
-  free(ptr);
   if (SARA_DEBUG) printf("\t</Contents>\n");
 } // end typemap struct attropl *
 
@@ -339,7 +332,7 @@
    int len=0, i;
 
    if (SARA_DEBUG) 
-     printf("Converteren char ** -> python list\n");
+     printf("Convert char ** -> python list\n");
 
 
    if ($1 == NULL) 
@@ -512,26 +505,12 @@ int get_error()
 // stuff here to extend the python classes.
 //
 %nodefault;
-// %include "pbs_python.h"
+
+
 %include "pbs_ifl.h"
 %include "rm.h"
 %include "log.h"
 %include "pbs_error.h"
-
-
-// Iets van uhhh..... obsolete
-// %ignore pbs_errno;
-//%include <pbs_error.h>
-
-
-/*
-%feature("shadow") attrl::__str__ {
-  def __str__(self): print self.name + self.value;
-}
-%extend attrl {
-  void __str__();
-}
-*/
 
 /* not used
 %extend batch_status {
@@ -560,9 +539,7 @@ int get_error()
     if (SARA_DEBUG)
        printf("Bas free attrl\n");
 
-    /*
-  	free(self);
-    */
+    // free(self);
   }
 }
 
@@ -583,9 +560,7 @@ int get_error()
     if (SARA_DEBUG)
        printf("Bas free attropl\n");
 
-    /*
-  	free(self);
-    */
+    // free(self);
   }
 }
 

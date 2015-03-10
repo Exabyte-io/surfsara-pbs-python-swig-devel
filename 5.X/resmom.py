@@ -87,17 +87,9 @@ def use_default_keywords(id, d):
   Get the default values from the mom daemon
   """
   err = 0
-  print default_mom_res
   for res in default_mom_res:
-    print res
-    #addreq(id, res)
-    addreq_err(id, err, res) 
-    print err
-    #resp = getreq(id)
-    resp = getreq_err(err, id)
-    print "error: ", err
-
-    print resp,id
+    addreq(id, res)
+    resp = getreq(id)
     check_resp(d, resp)
 
   # Do not proceed if we have an empty dictionary
